@@ -2,20 +2,39 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts';
 import { Wallet, TrendingUp, TrendingDown, User, Target, Laptop, MessageCircle } from 'lucide-react';
 
 const Index = () => {
   const [feedback, setFeedback] = useState("You spent more than your income. Try saving more before big purchases.");
   const [currentBalance, setCurrentBalance] = useState(2500);
+  const [balanceHistory, setBalanceHistory] = useState([
+    { month: 'Jan', balance: 2000 },
+    { month: 'Feb', balance: 2200 },
+    { month: 'Mar', balance: 2400 },
+    { month: 'Apr', balance: 2500 }
+  ]);
+
+  const chartConfig = {
+    balance: {
+      label: "Balance",
+      color: "hsl(45, 93%, 47%)"
+    }
+  };
 
   const handleDecision = (choice: 'save' | 'finance' | 'buy') => {
+    const newBalance = choice === 'save' ? currentBalance : currentBalance - 1200;
+    
     if (choice === 'save') {
       setFeedback("Excellent choice! Waiting and saving up shows great financial discipline. You'll avoid debt and interest payments.");
     } else if (choice === 'finance') {
-      setCurrentBalance(prev => prev - 1200);
+      setCurrentBalance(newBalance);
+      setBalanceHistory(prev => [...prev, { month: 'May', balance: newBalance }]);
       setFeedback("You chose to finance the laptop. While you got what you needed, be mindful of the monthly payments and interest costs.");
     } else if (choice === 'buy') {
-      setCurrentBalance(prev => prev - 1200);
+      setCurrentBalance(newBalance);
+      setBalanceHistory(prev => [...prev, { month: 'May', balance: newBalance }]);
       setFeedback("You bought the laptop outright! Good choice if you had enough savings, but watch your remaining budget carefully.");
     }
   };
@@ -66,26 +85,49 @@ const Index = () => {
           </CardContent>
         </Card>
 
-        {/* Status Card */}
+        {/* Status Card with Graph */}
         <Card className="mb-8 bg-white/80 backdrop-blur-sm border-0 shadow-lg">
-          <CardContent className="p-8 text-center">
-            <div className="pb-6 border-b border-amber-200 mb-6">
-              <div className="flex items-center justify-center mb-2">
-                <div className="bg-amber-100 p-2 rounded-full mr-3">
-                  <User className="w-6 h-6 text-amber-700" />
+          <CardContent className="p-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="text-center">
+                <div className="pb-6 border-b border-amber-200 mb-6">
+                  <div className="flex items-center justify-center mb-2">
+                    <div className="bg-amber-100 p-2 rounded-full mr-3">
+                      <User className="w-6 h-6 text-amber-700" />
+                    </div>
+                    <p className="text-xl text-gray-800">
+                      <span className="font-semibold text-amber-800">Your Status:</span> Student (21)
+                    </p>
+                  </div>
                 </div>
-                <p className="text-xl text-gray-800">
-                  <span className="font-semibold text-amber-800">Your Status:</span> Student (21)
-                </p>
+                <div className="flex items-center justify-center">
+                  <div className="bg-amber-100 p-2 rounded-full mr-3">
+                    <Target className="w-6 h-6 text-amber-700" />
+                  </div>
+                  <p className="text-xl text-gray-800">
+                    <span className="font-semibold text-amber-800">Goal:</span> Save $5,000
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="flex items-center justify-center">
-              <div className="bg-amber-100 p-2 rounded-full mr-3">
-                <Target className="w-6 h-6 text-amber-700" />
+              <div className="text-center">
+                <h3 className="text-lg font-semibold text-amber-800 mb-4">Balance Over Time</h3>
+                <div className="h-48">
+                  <ChartContainer config={chartConfig}>
+                    <LineChart data={balanceHistory}>
+                      <XAxis dataKey="month" />
+                      <YAxis />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Line 
+                        type="monotone" 
+                        dataKey="balance" 
+                        stroke="var(--color-balance)" 
+                        strokeWidth={3}
+                        dot={{ fill: "var(--color-balance)", strokeWidth: 2, r: 4 }}
+                      />
+                    </LineChart>
+                  </ChartContainer>
+                </div>
               </div>
-              <p className="text-xl text-gray-800">
-                <span className="font-semibold text-amber-800">Goal:</span> Save $5,000
-              </p>
             </div>
           </CardContent>
         </Card>
