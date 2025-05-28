@@ -95,7 +95,7 @@ const Index = () => {
         <Card className="mb-8 bg-white/80 backdrop-blur-sm border-0 shadow-lg">
           <CardContent className="p-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="text-center\ncenter">
+              <div className="text-center">
                 <div className="pb-6 border-b border-amber-200 mb-6 my-[30px]">
                   <div className="flex items-center justify-center mb-2">
                     <div className="bg-amber-100 p-2 rounded-full mr-3">
