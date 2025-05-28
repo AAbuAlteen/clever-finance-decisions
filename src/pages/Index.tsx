@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Wallet, TrendingUp, TrendingDown, User, Target, Laptop, MessageCircle } from 'lucide-react';
 
 const Index = () => {
   const [feedback, setFeedback] = useState("You spent more than your income. Try saving more before big purchases.");
@@ -31,15 +32,24 @@ const Index = () => {
           <CardContent className="p-6">
             <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12">
               <div className="text-center">
-                <p className="text-3xl font-bold text-gray-800">${currentBalance}</p>
+                <div className="flex items-center justify-center mb-2">
+                  <Wallet className="w-8 h-8 text-gray-800 mr-2" />
+                  <p className="text-3xl font-bold text-gray-800">${currentBalance}</p>
+                </div>
                 <p className="text-sm text-gray-600 mt-1">Current Balance</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl font-bold text-green-600">+800</p>
+                <div className="flex items-center justify-center mb-2">
+                  <TrendingUp className="w-8 h-8 text-green-600 mr-2" />
+                  <p className="text-3xl font-bold text-green-600">+800</p>
+                </div>
                 <p className="text-sm text-gray-600 mt-1">Monthly Income</p>
               </div>
               <div className="text-center">
-                <p className="text-3xl font-bold text-red-600">-300</p>
+                <div className="flex items-center justify-center mb-2">
+                  <TrendingDown className="w-8 h-8 text-red-600 mr-2" />
+                  <p className="text-3xl font-bold text-red-600">-300</p>
+                </div>
                 <p className="text-sm text-gray-600 mt-1">Monthly Expenses</p>
               </div>
             </div>
@@ -50,23 +60,32 @@ const Index = () => {
         <Card className="mb-6 bg-red-50 border-2 border-red-200">
           <CardContent className="p-6 text-center">
             <div className="pb-4 border-b-2 border-gray-400 mb-4">
+              <div className="flex items-center justify-center mb-2">
+                <User className="w-6 h-6 text-gray-800 mr-2" />
+                <p className="text-xl">
+                  <strong>Your Status:</strong> Student (21)
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center justify-center">
+              <Target className="w-6 h-6 text-gray-800 mr-2" />
               <p className="text-xl">
-                <strong>Your Status:</strong> Student (21)
+                <strong>Goal:</strong> Save $5,000
               </p>
             </div>
-            <p className="text-xl">
-              <strong>Goal:</strong> Save $5,000
-            </p>
           </CardContent>
         </Card>
 
         {/* Decision Card */}
         <Card className="mb-6 bg-red-50 border-2 border-red-200">
           <CardContent className="p-6 text-center">
-            <p className="text-xl mb-6">
-              <strong>Decision:</strong><br />
-              Buy a laptop for $1,200?
-            </p>
+            <div className="flex items-center justify-center mb-6">
+              <Laptop className="w-6 h-6 text-gray-800 mr-2" />
+              <p className="text-xl">
+                <strong>Decision:</strong><br />
+                Buy a laptop for $1,200?
+              </p>
+            </div>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={() => handleDecision('yes')}
@@ -89,8 +108,13 @@ const Index = () => {
         {/* Feedback Card */}
         <Card className="bg-red-50 border-2 border-red-200">
           <CardContent className="p-6 text-center">
-            <p className="text-xl">
-              <strong>Feedback:</strong><br />
+            <div className="flex items-center justify-center mb-2">
+              <MessageCircle className="w-6 h-6 text-gray-800 mr-2" />
+              <p className="text-xl">
+                <strong>Feedback:</strong>
+              </p>
+            </div>
+            <p className="text-lg">
               {feedback}
             </p>
           </CardContent>
