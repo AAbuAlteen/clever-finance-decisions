@@ -50,9 +50,7 @@ const Index = () => {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-amber-900 mb-2">
-            Manage Your Finances
-          </h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-amber-900 mb-2 font-sans">FinPal</h1>
           <div className="w-24 h-1 bg-amber-400 mx-auto rounded-full"></div>
         </div>
 
